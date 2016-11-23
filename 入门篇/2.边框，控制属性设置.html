@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin:0;padding:0;}
+			body{overflow: hidden;}
+			canvas{border:1px solid red;}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width='600' height='500'></canvas>
+		<script type="text/javascript" src="fabric.js" ></script>
+		<script type="text/javascript" src="fabric.require.js" ></script>
+		<script type="text/javascript">
+			
+			var canvas = new fabric.Canvas('canvas');
+			
+			 
+			 var triangle = new fabric.Triangle({ //实例化一个三角形
+			 	width : 100, // 宽度100
+			 	height : 100, // 高度100
+			 	fill : 'blue', // 填充色
+			 	left : 100, 
+			 	top : 100 
+			 });
+			 
+			 var cricle = new fabric.Circle({
+			 	radius : 50,
+			 	fill : 'red',
+			 })
+			 
+			 
+			 canvas.add(triangle,cricle); //把 三角形对象添加到canvas
+			 
+			 //取消边框 和 控制点
+			 triangle.hasBorders = triangle.hasControls = false; 
+			 
+			 canvas.on({
+			 	'mouse:down':function(e){ // 鼠标按下
+			 		if(e.target){
+			 			e.target.opacity = 0.5;
+			 			canvas.renderAll();
+			 		}
+			 	},
+			 	
+			 	'mouse:up':function(e){ // 鼠标抬起
+			 		if(e.target){
+			 			e.target.opacity = 1;
+			 			canvas.renderAll();
+			 		}
+			 	},
+			 	'mouse:moved':function(e){
+			 		if(e.target){
+			 			e.target.opacity = 0.5;
+			 			canvas.renderAll();
+			 		}
+			 	},
+			 	'object:modified': function(e) {
+			      e.target.opacity = 1;
+			    }
+			 })
+			 
+		</script>
+	</body>
+</html>

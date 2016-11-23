@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin:0;padding:0;}
+			body{overflow: hidden;}
+			canvas{border:1px solid red;}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width='600' height='500'></canvas>
+		<script type="text/javascript" src="fabric.js" ></script>
+		<script type="text/javascript" src="fabric.require.js" ></script>
+		<script type="text/javascript">
+			
+			var canvas = new fabric.Canvas('canvas');
+			
+			 
+			 var triangle = new fabric.Triangle({ //实例化一个三角形
+			 	width : 50, // 宽度100
+			 	height : 50, // 高度100
+			 	fill : 'blue', // 填充色
+			 	left : 50, 
+			 	top : 50 
+			 });
+			 
+			 var rect = new fabric.Rect({
+			 	width:100,
+			 	height:100,
+			 	fill : 'red',
+			 	left : 100,
+			 	top:100
+			 });
+			 
+			canvas.add(triangle,rect); //添加新建的对象
+			/*
+			 	forEachObject ： 遍历当前canvas中所有的对象
+			 */
+			canvas.forEachObject(function(o){
+				console.log(o)
+				o.hasBorders = o.hasControls = false;  // 取消 边框、控制点
+			});
+			 
+			 
+			  function animate(e, dir) {
+			    if (e.target) {
+			      fabric.util.animate({
+			        startValue: e.target.get('angle'),
+			        endValue: e.target.get('angle') + (dir ? 10 : -10), //旋转角度
+			        duration: 100, // 持续时间
+			        onChange: function(value) { 
+			          e.target.setAngle(value); // change时设置旋转角度
+			          canvas.renderAll(); //从新渲染
+			        },
+			        onComplete: function() {
+			          e.target.setCoords();
+			        }
+			      });
+			      fabric.util.animate({
+			        startValue: e.target.get('scaleX'),
+			        endValue: e.target.get('scaleX') + (dir ? 0.2 : -0.2), // 放大
+			        duration: 100,
+			        onChange: function(value) {
+			          e.target.scale(value);
+			          canvas.renderAll();
+			        },
+			        onComplete: function() {
+			          e.target.setCoords();
+			        }
+			      });
+			    }
+			  }
+			 
+			canvas.on({
+				'mouse:down':function(e){
+					animate(e,1);
+				},
+				'mouse:up':function(e){
+					animate(e,0);
+				}
+			});
+			
+			
+			canvas.selection = false;
+		</script>
+	</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin:0;padding:0;}
+			body{overflow: hidden;}
+			canvas{border:1px solid red;}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width='600' height='500'></canvas>
+		<script type="text/javascript" src="fabric.js" ></script>
+		<script type="text/javascript" src="fabric.require.js" ></script>
+		<script type="text/javascript">
+			
+			var canvas = new fabric.Canvas('canvas');
+			
+			console.dir(canvas);
+			
+
+			// create a rectangle object
+			var rect = new fabric.Rect({ //实例化一个 矩形
+			    left: 100, // 开始的x轴位置
+			    top: 100, // 开始的y轴位置
+			    fill: 'red', //填充颜色
+			    width: 200, //宽度
+			    height: 100, //高度
+			});
+			
+			var circle = new fabric.Circle({ // 实例化一个圆形
+				radius:30, //半径
+				fill : '#f55', //填充色
+				left:200,
+				top:200
+			});
+			
+			canvas.add(rect,circle); //把实例化的对象添加到canvas中
+			
+			
+			canvas.item(0).set({ //重新设置 rect 对象
+			    borderColor: '#000', //边框线的颜色
+			    cornerColor: '#000', //拖拽块的颜色
+			    cornerSize: 5, //设置拖拽滑块的大小
+			    transparentCorners: true //拖拽块是否‘空心’
+		 	});
+			 
+			 canvas.item(1).set({
+			 	borderColor:'red', //边框线颜色
+			 	cornerColor:'green',////拖拽块的颜色
+			 	cornerSize:10, //拖拽块大小
+			 	transparentCorners: false //是否空心
+			 });
+			 
+			 
+			 canvas.item(1).hasBorders = true;  //是否有边框(默认有)
+			 canvas.item(1).hasControls = false; //是否可以控制大小（默认有拖拽块，设置后拖拽块消失）
+			 canvas.item(1).hoverCursor = 'pointer' // 设置 hover的鼠标的形状 （默认是move）
+			 
+			 
+		</script>
+	</body>
+</html>

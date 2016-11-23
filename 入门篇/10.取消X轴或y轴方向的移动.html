@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin:0;padding:0;}
+			body{overflow: hidden;}
+			canvas{border:1px solid red;}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width='600' height='500'></canvas>
+		<script type="text/javascript" src="fabric.js" ></script>
+		<script type="text/javascript" src="fabric.require.js" ></script>
+		<script type="text/javascript">
+			
+			var canvas = new fabric.Canvas('canvas');
+			
+			 var cricle = new fabric.Circle({
+			 	radius : 50,
+			 	fill : 'red',
+			 	left : 150, 
+			 	top : 150 
+			 })
+			 
+			var cricle2 = new fabric.Circle({
+			 	radius : 30,
+			 	fill : 'blue',
+			 	left : 50, 
+			 	top : 50 
+			 })
+			canvas.add(cricle,cricle2); //把 对象添加到canvas【可多个】
+			 /*
+			  	
+			  	锁定X 轴方向的移动 ： lockMovementX = true
+			  	锁定Y 轴方向的移动 ： lockMovementY = true
+			  		
+			  */
+			
+			cricle.lockMovementX = true;// 只有X轴可以拖动
+			cricle2.lockMovementY = true;// 只有Y轴可以拖动
+			
+		</script>
+	</body>
+</html>

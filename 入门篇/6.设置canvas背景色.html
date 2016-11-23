@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin:0;padding:0;}
+			body{overflow: hidden;}
+			canvas{border:1px solid red;}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width='600' height='500'></canvas>
+		<script type="text/javascript" src="fabric.js" ></script>
+		<script type="text/javascript" src="fabric.require.js" ></script>
+		<script type="text/javascript">
+			
+			var canvas = new fabric.Canvas('canvas');
+			
+			 var cricle = new fabric.Circle({
+			 	radius : 50,
+			 	fill : 'red',
+			 	left : 150, 
+			 	top : 150 
+			 })
+			canvas.add(cricle); //把 对象添加到canvas【可多个】
+			 /*
+			  	 设置背景色，需要重新渲染一下。。。否则，在操作对象时，背景色会发生改变
+			  */
+			canvas.backgroundColor = 'rgba(0,0,0,0.3)';
+			canvas.renderAll();
+			 
+		</script>
+	</body>
+</html>
