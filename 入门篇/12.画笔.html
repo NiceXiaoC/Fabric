@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			.canvas-container{float:left;}
+			canvas{border:1px solid #000;}
+			.box{
+				width:300px;height:200px;border: 1px solid red; float:left;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" width="600" height="500"></canvas>
+		
+		<div class="box">
+			<div id="drawing-mode-options">
+				<button id="clear-canvas" class="btn btn-info">Clear</button>
+			    <label for="drawing-mode-selector">Mode:</label>
+			    <select id="drawing-mode-selector">
+			      <option>Pencil</option>
+			      <option>Circle</option>
+			      <option>Spray</option>
+			      <option>Pattern</option>
+			
+			      <option>hline</option>
+			      <option>vline</option>
+			      <option>square</option>
+			      <option>diamond</option>
+			      <option>texture</option>
+			    </select><br>
+			
+			    <label for="drawing-line-width">Line width:</label>
+			    <span class="info">6</span><input type="range" value="30" min="0" max="150" id="drawing-line-width"><br>
+			
+			    <label for="drawing-color">Line color:</label>
+			    <input type="color" value="#005E7A" id="drawing-color"><br>
+			
+			    <label for="drawing-shadow-color">Shadow color:</label>
+			    <input type="color" value="#005E7A" id="drawing-shadow-color"><br>
+			
+			    <label for="drawing-shadow-width">Shadow width:</label>
+			    <span class="info">7</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-width"><br>
+			
+			    <label for="drawing-shadow-offset">Shadow offset:</label>
+			    <span class="info">0</span><input type="range" value="0" min="0" max="50" id="drawing-shadow-offset"><br>
+			  </div>
+		</div>
+		
+		<script type="text/javascript" src="fabric.js" ></script>
+		<script type="text/javascript">
+			var $ = function(id){
+				return document.getElementById(id);
+			}
+			
+			var canvas = this._canvas = new fabric.Canvas('canvas'/*,{
+				isDrawingMode : true   // 开启画笔功能
+			}*/);
+			
+			canvas.isDrawingMode = true;
+			
+			
+			// transparentCorners : 初始化canvas图形和矩形对象并设置其基本属性
+			fabric.Object.prototype.transparentCorners = false; 
+			
+			
+			var drawingModeEl = $('drawing-mode'),
+			    drawingOptionsEl = $('drawing-mode-options'),
+			    drawingColorEl = $('drawing-color'),
+			    drawingShadowColorEl = $('drawing-shadow-color'),
+			    drawingLineWidthEl = $('drawing-line-width'),
+			    drawingShadowWidth = $('drawing-shadow-width'),
+			    drawingShadowOffset = $('drawing-shadow-offset'),
+			    clearEl = $('clear-canvas');
+			    
+			    
+			    // 清除画板
+			    clearEl.onclick = function(){
+			    	canvas.clear();
+			    }
+				
+			
+			  $('drawing-mode-selector').onchange = function() {
+			
+			    if (this.value === 'hline') {
+			      canvas.freeDrawingBrush = vLinePatternBrush;
+			    }
+			    else if (this.value === 'vline') {
+			      canvas.freeDrawingBrush = hLinePatternBrush;
+			    }
+			    else if (this.value === 'square') {
+			      canvas.freeDrawingBrush = squarePatternBrush;
+			    }
+			    else if (this.value === 'diamond') {
+			      canvas.freeDrawingBrush = diamondPatternBrush;
+			    }
+			    else if (this.value === 'texture') {
+			      canvas.freeDrawingBrush = texturePatternBrush;
+			    }
+			    else {
+			      canvas.freeDrawingBrush = new fabric[this.value + 'Brush'](canvas);
+			    }
+			
+			    if (canvas.freeDrawingBrush) {
+			      canvas.freeDrawingBrush.color = drawingColorEl.value;
+			      canvas.freeDrawingBrush.width = parseInt(drawingLineWidthEl.value, 10) || 1;
+			      canvas.freeDrawingBrush.shadowBlur = parseInt(drawingShadowWidth.value, 10) || 0;
+			    }
+			  };
+			
+			  drawingColorEl.onchange = function() {
+			    canvas.freeDrawingBrush.color = this.value;
+			  };
+			  drawingShadowColorEl.onchange = function() {
+			    canvas.freeDrawingBrush.shadowColor = this.value;
+			  };
+			  drawingLineWidthEl.onchange = function() {
+			    canvas.freeDrawingBrush.width = parseInt(this.value, 10) || 1;
+			    this.previousSibling.innerHTML = this.value;
+			  };
+			  drawingShadowWidth.onchange = function() {
+			    canvas.freeDrawingBrush.shadowBlur = parseInt(this.value, 10) || 0;
+			    this.previousSibling.innerHTML = this.value;
+			  };
+			  drawingShadowOffset.onchange = function() {
+			    canvas.freeDrawingBrush.shadowOffsetX =
+			    canvas.freeDrawingBrush.shadowOffsetY = parseInt(this.value, 10) || 0;
+			    this.previousSibling.innerHTML = this.value;
+			  };
+			
+			  if (canvas.freeDrawingBrush) {
+			    canvas.freeDrawingBrush.color = drawingColorEl.value;
+			    canvas.freeDrawingBrush.width = parseInt(drawingLineWidthEl.value, 10) || 1;
+			    canvas.freeDrawingBrush.shadowBlur = 0;
+			  }
+				
+				
+		</script>
+	</body>
+</html>
